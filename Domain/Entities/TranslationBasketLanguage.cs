@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-
-namespace TranslatorAPI.Models
+namespace TranslatorAPI.Domain.Models
 {
     public class TranslationBasketLanguage
     {

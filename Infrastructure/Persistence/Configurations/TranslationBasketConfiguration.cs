@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TranslatorAPI.Models;
+using TranslatorAPI.Domain.Models;
 
-namespace TranslatorAPI.Configurators
+namespace TranslatorAPI.Infrastructure.Configurations
 {
-    public class TranslationBasketConfigurator : IEntityTypeConfiguration<TranslationBasket>
+    public class TranslationBasketConfiguration : IEntityTypeConfiguration<TranslationBasket>
     {
         public void Configure(EntityTypeBuilder<TranslationBasket> builder)
         {

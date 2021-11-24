@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TranslatorAPI.Migrations
+namespace Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,8 +25,7 @@ namespace TranslatorAPI.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,13 +84,13 @@ namespace TranslatorAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "TranslationBasket",
-                columns: new[] { "Id", "CustomerId", "DueDate", "Price" },
-                values: new object[] { new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f"), new Guid("53b03af6-75ca-4ee7-9a2d-5f4d35881b44"), new DateTime(2021, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m });
+                columns: new[] { "Id", "CustomerId", "DueDate" },
+                values: new object[] { new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f"), new Guid("53b03af6-75ca-4ee7-9a2d-5f4d35881b44"), new DateTime(2021, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "TranslationBasket",
-                columns: new[] { "Id", "CustomerId", "DueDate", "Price" },
-                values: new object[] { new Guid("fb31c0e6-82c1-4944-b10c-21eac32848c1"), new Guid("eb8a9cfb-a2bf-446f-8195-405e534f966e"), new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m });
+                columns: new[] { "Id", "CustomerId", "DueDate" },
+                values: new object[] { new Guid("fb31c0e6-82c1-4944-b10c-21eac32848c1"), new Guid("eb8a9cfb-a2bf-446f-8195-405e534f966e"), new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "FileToTranslate",

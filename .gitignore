@@ -1,3 +1,7 @@
 .vs/
 TranslatorAPI/bin/
 TranslatorAPI/obj/
+Domain/bin/
+Domain/obj/
+Infrastructure/bin/
+Infrastructure/obj/

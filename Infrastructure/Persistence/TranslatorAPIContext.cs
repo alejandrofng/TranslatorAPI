@@ -1,27 +1,34 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using TranslatorAPI.Configurators;
-using TranslatorAPI.Models;
+using TranslatorAPI.Infrastructure.Configurations;
+using TranslatorAPI.Domain.Models;
 
-namespace TranslatorAPI
+namespace TranslatorAPI.Infrastructure
 {
     public class TranslatorAPIContext:DbContext
     {
         private readonly string _connectionString;
+        public TranslatorAPIContext()
+        {
+
+        }
         public TranslatorAPIContext(string connectionString)
         {
             _connectionString = connectionString;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_connectionString);
+            optionsBuilder.UseSqlServer(_connectionString,
+                sqlOptions =>
+                {
+                    //sqlOptions.MigrationsAssembly("Translator.Infrastructure.Migrations");
+                    sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(3), null);
+                });
             optionsBuilder.UseLazyLoadingProxies();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(FileToTranslateConfigurator).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(FileToTranslateConfiguration).Assembly);
             ////dummy data to test the database
             ///
             Language LanguageSpanish = new (new Guid("81484F30-49AC-4C3D-B794-CED9A886201C"), "es-ES");

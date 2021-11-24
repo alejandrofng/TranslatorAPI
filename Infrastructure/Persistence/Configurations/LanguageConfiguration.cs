@@ -1,14 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TranslatorAPI.Models;
+using TranslatorAPI.Domain.Models;
 
-namespace TranslatorAPI.Configurators
+namespace TranslatorAPI.Infrastructure.Configurations
 {
-    public class LanguageConfigurator : IEntityTypeConfiguration<Language>
+    public class LanguageConfiguration : IEntityTypeConfiguration<Language>
     {
         public void Configure(EntityTypeBuilder<Language> builder)
         {

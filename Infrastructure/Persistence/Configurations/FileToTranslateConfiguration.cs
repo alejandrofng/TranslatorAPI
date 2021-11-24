@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TranslatorAPI.Models;
+using TranslatorAPI.Domain.Models;
 
-namespace TranslatorAPI.Configurators
+namespace TranslatorAPI.Infrastructure.Configurations
 {
-    public class FileToTranslateConfigurator : IEntityTypeConfiguration<FileToTranslate>
+    public class FileToTranslateConfiguration : IEntityTypeConfiguration<FileToTranslate>
     {
         public void Configure(EntityTypeBuilder<FileToTranslate> builder)
         {

@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TranslatorAPI;
+using TranslatorAPI.Infrastructure;
 
-namespace TranslatorAPI.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TranslatorAPIContext))]
     partial class TranslatorAPIContextModelSnapshot : ModelSnapshot
@@ -19,7 +19,7 @@ namespace TranslatorAPI.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TranslatorAPI.Models.FileToTranslate", b =>
+            modelBuilder.Entity("TranslatorAPI.Domain.Models.FileToTranslate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,7 +74,7 @@ namespace TranslatorAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Models.Language", b =>
+            modelBuilder.Entity("TranslatorAPI.Domain.Models.Language", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,7 +97,7 @@ namespace TranslatorAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Models.TranslationBasket", b =>
+            modelBuilder.Entity("TranslatorAPI.Domain.Models.TranslationBasket", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,9 +109,6 @@ namespace TranslatorAPI.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
                     b.ToTable("TranslationBasket");
@@ -121,19 +118,17 @@ namespace TranslatorAPI.Migrations
                         {
                             Id = new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f"),
                             CustomerId = new Guid("53b03af6-75ca-4ee7-9a2d-5f4d35881b44"),
-                            DueDate = new DateTime(2021, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m
+                            DueDate = new DateTime(2021, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = new Guid("fb31c0e6-82c1-4944-b10c-21eac32848c1"),
                             CustomerId = new Guid("eb8a9cfb-a2bf-446f-8195-405e534f966e"),
-                            DueDate = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m
+                            DueDate = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Models.TranslationBasketLanguage", b =>
+            modelBuilder.Entity("TranslatorAPI.Domain.Models.TranslationBasketLanguage", b =>
                 {
                     b.Property<Guid>("TranslationBasketId")
                         .HasColumnType("uniqueidentifier");
@@ -160,9 +155,9 @@ namespace TranslatorAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Models.FileToTranslate", b =>
+            modelBuilder.Entity("TranslatorAPI.Domain.Models.FileToTranslate", b =>
                 {
-                    b.HasOne("TranslatorAPI.Models.TranslationBasket", "TranslationBasket")
+                    b.HasOne("TranslatorAPI.Domain.Models.TranslationBasket", "TranslationBasket")
                         .WithMany("Files")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -171,15 +166,15 @@ namespace TranslatorAPI.Migrations
                     b.Navigation("TranslationBasket");
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Models.TranslationBasketLanguage", b =>
+            modelBuilder.Entity("TranslatorAPI.Domain.Models.TranslationBasketLanguage", b =>
                 {
-                    b.HasOne("TranslatorAPI.Models.Language", "Language")
+                    b.HasOne("TranslatorAPI.Domain.Models.Language", "Language")
                         .WithMany("TranslationBaskets")
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TranslatorAPI.Models.TranslationBasket", "TranslationBasket")
+                    b.HasOne("TranslatorAPI.Domain.Models.TranslationBasket", "TranslationBasket")
                         .WithMany("Languages")
                         .HasForeignKey("TranslationBasketId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -190,12 +185,12 @@ namespace TranslatorAPI.Migrations
                     b.Navigation("TranslationBasket");
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Models.Language", b =>
+            modelBuilder.Entity("TranslatorAPI.Domain.Models.Language", b =>
                 {
                     b.Navigation("TranslationBaskets");
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Models.TranslationBasket", b =>
+            modelBuilder.Entity("TranslatorAPI.Domain.Models.TranslationBasket", b =>
                 {
                     b.Navigation("Files");
 

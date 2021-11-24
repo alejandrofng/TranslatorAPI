@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TranslatorAPI.Infrastructure;
 
 namespace TranslatorAPI
 {
@@ -31,7 +32,15 @@ namespace TranslatorAPI
 
             services.AddControllers();
             services.AddScoped(_ => new TranslatorAPIContext(connectionString));
-            services.AddSwaggerGen(c =>
+            //services.AddDbContext<TranslatorAPIContext>(options => options.UseSqlServer(connectionString,
+            //                                                             sqlOptions =>
+            //                                                             {
+            //                                                                 sqlOptions.MigrationsAssembly("Translator.Infrastructure.Migrations");
+            //                                                                 sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(3), null);
+            //                                                             })
+            //                                               .UseLazyLoadingProxies());
+
+services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TranslatorAPI", Version = "v1" });
             });

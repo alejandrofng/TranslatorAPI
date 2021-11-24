@@ -1,14 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TranslatorAPI.Models;
+using TranslatorAPI.Domain.Models;
 
-namespace TranslatorAPI.Configurators
+namespace TranslatorAPI.Infrastructure.Configurations
 {
-    public class TranslationBasketLanguageConfigurator : IEntityTypeConfiguration<TranslationBasketLanguage>
+    public class TranslationBasketLanguageConfiguration : IEntityTypeConfiguration<TranslationBasketLanguage>
     {
         public void Configure(EntityTypeBuilder<TranslationBasketLanguage> builder)
         {

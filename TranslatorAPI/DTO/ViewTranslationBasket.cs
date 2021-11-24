@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using TranslatorAPI.Models;
+using TranslatorAPI.Domain.Models;
 
 namespace TranslatorAPI.DTO
 {
