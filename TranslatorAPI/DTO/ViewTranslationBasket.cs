@@ -10,15 +10,16 @@ namespace TranslatorAPI.DTO
     {
         public Guid ProjectId { get; set; }
         public Guid CustomerId { get; set; }
-        public DateTime DueDate { get; set; }
-        public TimeSpan RemainingTime => DateTime.Now - DueDate;
+        public string DueDate { get; set; }
+        public string RemainingTime { get; set; }
         public List<FileToTranslateDTO> Files { get; set; }
         public decimal Price { get; set; }
         public ViewTranslationBasket(Guid ProjectId, Guid CustomerId, DateTime DueDate, List<FileToTranslateDTO> Files)
         {
             this.ProjectId = ProjectId;
             this.CustomerId = CustomerId;
-            this.DueDate = DueDate;
+            this.DueDate = DueDate.ToString("dd/MM/yyyy hh:mm");
+            RemainingTime = (DateTime.Now - DueDate).ToString(@"d\.hh\:mm\:ss");
             this.Files = Files;
         }
         public static ViewTranslationBasket Map(TranslationBasket TranslationBasket)
