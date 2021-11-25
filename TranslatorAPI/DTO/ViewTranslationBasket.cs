@@ -23,9 +23,8 @@ namespace TranslatorAPI.DTO
             this.Files = Files;            
             this.Price = Price;
         }
-        public static ViewTranslationBasket Map(TranslationBasket TranslationBasket, CalculatePriceCommand command)
+        public static ViewTranslationBasket Map(TranslationBasket TranslationBasket,decimal Price)
         {
-            decimal Price = command.Execute(TranslationBasket.Files.Select(x=>x.Content).ToList());
             return new ViewTranslationBasket(TranslationBasket.Id,
                 TranslationBasket.CustomerId,
                 TranslationBasket.DueDate,

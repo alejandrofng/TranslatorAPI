@@ -6,6 +6,7 @@ using System.Linq;
 using TranslatorAPI.Infrastructure;
 using TranslatorAPI.DTO;
 using Application;
+using Application.Invokers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,10 +31,11 @@ namespace TranslatorAPI.Controllers
         // GET api/<TranslationBasketController>/5
         [HttpGet("{basketId}")]
         public ViewTranslationBasket Get(Guid basketId)
-        {
-            CalculatePriceCommand command = new();
+        {            
             var basket = _context.TranslationBasket.Include(x => x.Files).Where(x => x.Id == basketId).FirstOrDefault();
-            ViewTranslationBasket result = ViewTranslationBasket.Map(basket,command);
+            PriceCalculator pc = new();
+            decimal price = pc.Calculate(basket.Files.ToList());
+            ViewTranslationBasket result = ViewTranslationBasket.Map(basket,price);
             return result;
         }
 

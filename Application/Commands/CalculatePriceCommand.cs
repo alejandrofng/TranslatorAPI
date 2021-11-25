@@ -6,7 +6,7 @@ namespace Application
 {
     public class CalculatePriceCommand: Command<decimal>
     {
-        private decimal standardWordPrice => 0.07M;
+        private static decimal StandardWordPrice => 0.07M;
         public override decimal Execute(List<string> filesContent)
         {
             decimal price = 0M;
@@ -18,7 +18,7 @@ namespace Application
                 List<string> sentences = new(fileContent.Split("#LW-Test#", StringSplitOptions.RemoveEmptyEntries));
                 List<string> fileSentences = (from x in sentences
                                        group x by x into g
-                                       select g.Key).ToList<string>();
+                                       select g.Key).ToList();
 
                 foreach (string sentence in fileSentences)
                 {
@@ -42,7 +42,7 @@ namespace Application
                             }
                             else
                             {
-                                price += standardWordPrice;
+                                price += StandardWordPrice;
                                 fileWordsMemory.Add(word);
                             }
                         }
