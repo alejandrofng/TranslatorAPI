@@ -43,10 +43,11 @@ namespace TranslatorAPI.Controllers
         [HttpPost]
         public void Post([FromBody] AddTranslationBasket dto)
         {
+            
         }
         // POST api/<TranslationBasketController>
         [HttpPost("{basketId}/AddFile")]
-        public void AddProduct([FromBody] AddFileToTranslationBasket dto, Guid basketId)
+        public void AddFile([FromBody] AddFileToTranslationBasket dto, Guid basketId)
         {
         }
     }
