@@ -38,15 +38,8 @@ namespace TranslatorAPI.Infrastructure
             FileType Psd = new FileType(new Guid("991A253C-C55E-4F09-8D1B-6062E288A391"), "psd", new Guid("9C4478E4-784C-47C8-A96E-2661D6B33574"));
 
             PriceAlterator DiscountSpanish = new(new Guid("AA502C8D-2A63-4267-B65A-29DABC6FDFCB"), true, 20M);
-
             PriceAlterator OverpricePdf = new(new Guid("7198D221-9ED2-4174-AC21-68708E80EC3F"), false, 20M);
             PriceAlterator OverpricePsd = new(new Guid("9C4478E4-784C-47C8-A96E-2661D6B33574"), false, 35M);
-
-            //PriceAlteratorByLanguage DiscountSpanish = new(Guid.NewGuid(), new Guid("81484F30-49AC-4C3D-B794-CED9A886201C"), true,20M);
-
-            //PriceAlteratorByFileType OverpricePdf = new(Guid.NewGuid(), new Guid("269A6E63-F58C-493C-9F0B-3DD81ECE3FD6"), false, 20M);
-
-            //PriceAlteratorByFileType OverpricePsd = new(Guid.NewGuid(), new Guid("991A253C-C55E-4F09-8D1B-6062E288A391"), false, 35M);
 
             TranslationBasket translationBasket1 = new (new Guid("653910AC-3FC1-4D18-B471-AD496AB6425F"),new Guid("53B03AF6-75CA-4EE7-9A2D-5F4D35881B44"),new DateTime(2021, 12, 01));
             
