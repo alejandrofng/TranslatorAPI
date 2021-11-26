@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace TranslatorAPI.Domain.Entities
+namespace Domain.Entities
 {
     public class TranslationBasket
     {

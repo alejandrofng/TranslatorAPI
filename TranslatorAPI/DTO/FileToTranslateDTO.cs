@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TranslatorAPI.Domain.Entities;
+using Domain.Entities;
 
 namespace TranslatorAPI.DTO
 {
@@ -21,7 +21,7 @@ namespace TranslatorAPI.DTO
         }
         public static FileToTranslateDTO Map(FileToTranslate fileToTranslate)
         {
-            return new FileToTranslateDTO(fileToTranslate.Id, fileToTranslate.Name, fileToTranslate.Type, fileToTranslate.Comments);
+            return new FileToTranslateDTO(fileToTranslate.Id, fileToTranslate.Name, fileToTranslate.FileType.Code, fileToTranslate.Comments);
         }
     }
 }

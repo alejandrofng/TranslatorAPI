@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TranslatorAPI.Domain.Entities;
+using Domain.Entities;
 
 namespace TranslatorAPI.DTO
 {

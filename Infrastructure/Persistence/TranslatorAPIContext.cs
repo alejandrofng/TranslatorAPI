@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using Infrastructure.Persistence.Configurations;
-using TranslatorAPI.Domain.Entities;
+using Domain.Entities;
 
 namespace TranslatorAPI.Infrastructure
 {
@@ -32,16 +32,21 @@ namespace TranslatorAPI.Infrastructure
             ////dummy data to test the database
             ///
 
-            Language LanguageSpanish = new (new Guid("81484F30-49AC-4C3D-B794-CED9A886201C"), "es-ES");
+            Language LanguageSpanish = new (new Guid("81484F30-49AC-4C3D-B794-CED9A886201C"), "es-ES", new Guid("AA502C8D-2A63-4267-B65A-29DABC6FDFCB"));
 
-            FileType Pdf = new FileType(new Guid("269A6E63-F58C-493C-9F0B-3DD81ECE3FD6"), "pdf");
-            FileType Psd = new FileType(new Guid("991A253C-C55E-4F09-8D1B-6062E288A391"), "psd");
+            FileType Pdf = new FileType(new Guid("269A6E63-F58C-493C-9F0B-3DD81ECE3FD6"), "pdf", new Guid("7198D221-9ED2-4174-AC21-68708E80EC3F"));
+            FileType Psd = new FileType(new Guid("991A253C-C55E-4F09-8D1B-6062E288A391"), "psd", new Guid("9C4478E4-784C-47C8-A96E-2661D6B33574"));
 
-            PriceAlteratorByLanguage DiscountSpanish = new(Guid.NewGuid(), new Guid("81484F30-49AC-4C3D-B794-CED9A886201C"), true,20M);
+            PriceAlterator DiscountSpanish = new(new Guid("AA502C8D-2A63-4267-B65A-29DABC6FDFCB"), true, 20M);
 
-            PriceAlteratorByFileType OverpricePdf = new(Guid.NewGuid(), new Guid("269A6E63-F58C-493C-9F0B-3DD81ECE3FD6"), false, 20M);
+            PriceAlterator OverpricePdf = new(new Guid("7198D221-9ED2-4174-AC21-68708E80EC3F"), false, 20M);
+            PriceAlterator OverpricePsd = new(new Guid("9C4478E4-784C-47C8-A96E-2661D6B33574"), false, 35M);
 
-            PriceAlteratorByFileType OverpricePsd = new(Guid.NewGuid(), new Guid("991A253C-C55E-4F09-8D1B-6062E288A391"), false, 35M);
+            //PriceAlteratorByLanguage DiscountSpanish = new(Guid.NewGuid(), new Guid("81484F30-49AC-4C3D-B794-CED9A886201C"), true,20M);
+
+            //PriceAlteratorByFileType OverpricePdf = new(Guid.NewGuid(), new Guid("269A6E63-F58C-493C-9F0B-3DD81ECE3FD6"), false, 20M);
+
+            //PriceAlteratorByFileType OverpricePsd = new(Guid.NewGuid(), new Guid("991A253C-C55E-4F09-8D1B-6062E288A391"), false, 35M);
 
             TranslationBasket translationBasket1 = new (new Guid("653910AC-3FC1-4D18-B471-AD496AB6425F"),new Guid("53B03AF6-75CA-4EE7-9A2D-5F4D35881B44"),new DateTime(2021, 12, 01));
             
@@ -50,27 +55,25 @@ namespace TranslatorAPI.Infrastructure
             FileToTranslate fileToTranslate1 = new(new Guid("4BB64C01-5A9F-4C06-B370-EB5136F538BA"),
                 new Guid("653910AC-3FC1-4D18-B471-AD496AB6425F"),
                 "file 1",
-                "txt",
+                new Guid("269A6E63-F58C-493C-9F0B-3DD81ECE3FD6"),
                 "this is a sentence that is ending#LW-Test#This is another sentence that is included in the file#LW-Test#why would you repeat a whole sentence?",
                 "comment 1");
             FileToTranslate fileToTranslate2 = new(new Guid("DD22CBDA-F64F-4AAA-BCDD-4CCA567F9AEE"),
                 new Guid("653910AC-3FC1-4D18-B471-AD496AB6425F"),
                 "file 2",
-                "pdf",
+                new Guid("991A253C-C55E-4F09-8D1B-6062E288A391"),
                 "this sentence is going to be repeated#LW-Test#this sentence is going to be repeated",
                 "2 dummy comment 2");
 
             TranslationBasketLanguage translationBasketLanguage1 = new(new Guid("653910AC-3FC1-4D18-B471-AD496AB6425F"), new Guid("81484F30-49AC-4C3D-B794-CED9A886201C"));
 
             TranslationBasketLanguage translationBasketLanguage2 = new(new Guid("FB31C0E6-82C1-4944-B10C-21EAC32848C1"), new Guid("81484F30-49AC-4C3D-B794-CED9A886201C"));
-            
+
+            modelBuilder.Entity<PriceAlterator>().HasData(DiscountSpanish, OverpricePdf, OverpricePsd);
+
             modelBuilder.Entity<Language>().HasData(LanguageSpanish);
             
             modelBuilder.Entity<FileType>().HasData(Pdf, Psd);
-
-            modelBuilder.Entity<PriceAlteratorByFileType>().HasData(OverpricePdf, OverpricePsd);
-
-            modelBuilder.Entity<PriceAlteratorByLanguage>().HasData(DiscountSpanish);
 
             modelBuilder.Entity<TranslationBasket>().HasData(translationBasket1,translationBasket2);
             
@@ -83,7 +86,6 @@ namespace TranslatorAPI.Infrastructure
         public DbSet<TranslationBasket> TranslationBasket { get; set; } = null!;
         public DbSet<Language> Language { get; set; } = null!;
         public DbSet<FileType> FileType { get; set; } = null!;
-        public DbSet<PriceAlteratorByFileType> PriceAlteratorByFileType { get; set; } = null!;
-        public DbSet<PriceAlteratorByLanguage> PriceAlteratorByLanguage { get; set; } = null!;
+        public DbSet<PriceAlterator> PriceAlterator { get; set; } = null!;
     }
 }

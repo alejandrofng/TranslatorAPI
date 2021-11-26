@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using TranslatorAPI.Domain.Entities;
+using Domain.Entities;
 
 namespace Application
 {
     public abstract class Command<T>
     {
-        public abstract T Execute(List<FileToTranslate> files);
+        public abstract T Execute();
     }
 }

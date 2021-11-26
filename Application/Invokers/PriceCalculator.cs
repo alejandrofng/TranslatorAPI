@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TranslatorAPI.Domain.Entities;
+using Domain.Entities;
 
 namespace Application.Invokers
 {
     public class PriceCalculator
     {
-        public decimal Calculate(List<FileToTranslate> Files)
+        public decimal Calculate(TranslationBasket basket)
         {
-            CalculatePriceCommand command = new();
-            return command.Execute(Files);            
+            CalculatePriceCommand command = new(basket);
+            return command.Execute();            
         }
     }
 }

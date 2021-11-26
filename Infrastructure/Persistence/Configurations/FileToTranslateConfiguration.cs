@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TranslatorAPI.Domain.Entities;
+using Domain.Entities;
 
 namespace Infrastructure.Persistence.Configurations
 {
@@ -18,10 +18,6 @@ namespace Infrastructure.Persistence.Configurations
                 .IsRequired()
                 .HasMaxLength(140);
 
-            builder.Property(x => x.Type)
-                .IsRequired()
-                .HasMaxLength(10);
-
             builder.Property(x => x.Content)
                 .IsRequired()
                 .HasMaxLength(500);
@@ -34,7 +30,10 @@ namespace Infrastructure.Persistence.Configurations
                 .HasForeignKey(x => x.ProjectId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
-                
+            builder.HasOne(x => x.FileType)
+                .WithMany(x=>x.FileToTranslates)
+                .HasForeignKey(x => x.FileTypeId)
+                .IsRequired();
         }
     }
 }

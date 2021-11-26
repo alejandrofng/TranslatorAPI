@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TranslatorAPI.Domain.Entities;
+using Domain.Entities;
 
 namespace Infrastructure.Persistence.Configurations
 {

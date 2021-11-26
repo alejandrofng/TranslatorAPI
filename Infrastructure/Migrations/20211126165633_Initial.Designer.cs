@@ -10,7 +10,7 @@ using TranslatorAPI.Infrastructure;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TranslatorAPIContext))]
-    [Migration("20211126155639_Initial")]
+    [Migration("20211126165633_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TranslatorAPI.Domain.Entities.FileToTranslate", b =>
+            modelBuilder.Entity("Domain.Entities.FileToTranslate", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,6 +36,9 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<Guid>("FileTypeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(140)
@@ -44,12 +47,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("FileTypeId");
 
                     b.HasIndex("ProjectId");
 
@@ -61,31 +61,38 @@ namespace Infrastructure.Migrations
                             Id = new Guid("4bb64c01-5a9f-4c06-b370-eb5136f538ba"),
                             Comments = "comment 1",
                             Content = "this is a sentence that is ending#LW-Test#This is another sentence that is included in the file#LW-Test#why would you repeat a whole sentence?",
+                            FileTypeId = new Guid("269a6e63-f58c-493c-9f0b-3dd81ece3fd6"),
                             Name = "file 1",
-                            ProjectId = new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f"),
-                            Type = "txt"
+                            ProjectId = new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f")
                         },
                         new
                         {
                             Id = new Guid("dd22cbda-f64f-4aaa-bcdd-4cca567f9aee"),
                             Comments = "2 dummy comment 2",
                             Content = "this sentence is going to be repeated#LW-Test#this sentence is going to be repeated",
+                            FileTypeId = new Guid("991a253c-c55e-4f09-8d1b-6062e288a391"),
                             Name = "file 2",
-                            ProjectId = new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f"),
-                            Type = "pdf"
+                            ProjectId = new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f")
                         });
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Domain.Entities.FileType", b =>
+            modelBuilder.Entity("Domain.Entities.FileType", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<Guid>("PriceAlteratorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PriceAlteratorId");
 
                     b.ToTable("FileType");
 
@@ -93,16 +100,18 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("269a6e63-f58c-493c-9f0b-3dd81ece3fd6"),
-                            Code = "pdf"
+                            Code = "pdf",
+                            PriceAlteratorId = new Guid("7198d221-9ed2-4174-ac21-68708e80ec3f")
                         },
                         new
                         {
                             Id = new Guid("991a253c-c55e-4f09-8d1b-6062e288a391"),
-                            Code = "psd"
+                            Code = "psd",
+                            PriceAlteratorId = new Guid("9c4478e4-784c-47c8-a96e-2661d6b33574")
                         });
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Domain.Entities.Language", b =>
+            modelBuilder.Entity("Domain.Entities.Language", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -113,7 +122,12 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
 
+                    b.Property<Guid>("PriceAlteratorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PriceAlteratorId");
 
                     b.ToTable("Language");
 
@@ -121,80 +135,51 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("81484f30-49ac-4c3d-b794-ced9a886201c"),
-                            Code = "es-ES"
+                            Code = "es-ES",
+                            PriceAlteratorId = new Guid("aa502c8d-2a63-4267-b65a-29dabc6fdfcb")
                         });
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Domain.Entities.PriceAlteratorByFileType", b =>
+            modelBuilder.Entity("Domain.Entities.PriceAlterator", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("FileTypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDiscount")
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Percentage")
-                        .HasColumnType("decimal(18,2)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FileTypeId");
-
-                    b.ToTable("PriceAlteratorByFileType");
+                    b.ToTable("PriceAlterator");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d0520ec6-c731-484d-be8c-abc697741e7d"),
-                            FileTypeId = new Guid("269a6e63-f58c-493c-9f0b-3dd81ece3fd6"),
+                            Id = new Guid("aa502c8d-2a63-4267-b65a-29dabc6fdfcb"),
+                            IsDiscount = true,
+                            Percentage = 20m
+                        },
+                        new
+                        {
+                            Id = new Guid("7198d221-9ed2-4174-ac21-68708e80ec3f"),
                             IsDiscount = false,
                             Percentage = 20m
                         },
                         new
                         {
-                            Id = new Guid("29d2b6cc-52f8-4b35-9e30-433e314a0d53"),
-                            FileTypeId = new Guid("991a253c-c55e-4f09-8d1b-6062e288a391"),
+                            Id = new Guid("9c4478e4-784c-47c8-a96e-2661d6b33574"),
                             IsDiscount = false,
                             Percentage = 35m
                         });
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Domain.Entities.PriceAlteratorByLanguage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsDiscount")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("LanguageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Percentage")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LanguageId");
-
-                    b.ToTable("PriceAlteratorByLanguage");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("768fd54a-c264-4472-9519-734072b093c8"),
-                            IsDiscount = true,
-                            LanguageId = new Guid("81484f30-49ac-4c3d-b794-ced9a886201c"),
-                            Percentage = 20m
-                        });
-                });
-
-            modelBuilder.Entity("TranslatorAPI.Domain.Entities.TranslationBasket", b =>
+            modelBuilder.Entity("Domain.Entities.TranslationBasket", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -225,7 +210,7 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Domain.Entities.TranslationBasketLanguage", b =>
+            modelBuilder.Entity("Domain.Entities.TranslationBasketLanguage", b =>
                 {
                     b.Property<Guid>("TranslationBasketId")
                         .HasColumnType("uniqueidentifier");
@@ -252,48 +237,56 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Domain.Entities.FileToTranslate", b =>
+            modelBuilder.Entity("Domain.Entities.FileToTranslate", b =>
                 {
-                    b.HasOne("TranslatorAPI.Domain.Entities.TranslationBasket", "TranslationBasket")
+                    b.HasOne("Domain.Entities.FileType", "FileType")
+                        .WithMany("FileToTranslates")
+                        .HasForeignKey("FileTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.TranslationBasket", "TranslationBasket")
                         .WithMany("Files")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.Navigation("FileType");
+
                     b.Navigation("TranslationBasket");
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Domain.Entities.PriceAlteratorByFileType", b =>
+            modelBuilder.Entity("Domain.Entities.FileType", b =>
                 {
-                    b.HasOne("TranslatorAPI.Domain.Entities.FileType", "FileType")
-                        .WithMany()
-                        .HasForeignKey("FileTypeId")
+                    b.HasOne("Domain.Entities.PriceAlterator", "PriceAlterator")
+                        .WithMany("FileTypes")
+                        .HasForeignKey("PriceAlteratorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("FileType");
+                    b.Navigation("PriceAlterator");
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Domain.Entities.PriceAlteratorByLanguage", b =>
+            modelBuilder.Entity("Domain.Entities.Language", b =>
                 {
-                    b.HasOne("TranslatorAPI.Domain.Entities.Language", "Language")
-                        .WithMany()
-                        .HasForeignKey("LanguageId")
+                    b.HasOne("Domain.Entities.PriceAlterator", "PriceAlterator")
+                        .WithMany("Languages")
+                        .HasForeignKey("PriceAlteratorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Language");
+                    b.Navigation("PriceAlterator");
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Domain.Entities.TranslationBasketLanguage", b =>
+            modelBuilder.Entity("Domain.Entities.TranslationBasketLanguage", b =>
                 {
-                    b.HasOne("TranslatorAPI.Domain.Entities.Language", "Language")
+                    b.HasOne("Domain.Entities.Language", "Language")
                         .WithMany("TranslationBaskets")
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TranslatorAPI.Domain.Entities.TranslationBasket", "TranslationBasket")
+                    b.HasOne("Domain.Entities.TranslationBasket", "TranslationBasket")
                         .WithMany("Languages")
                         .HasForeignKey("TranslationBasketId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -304,12 +297,24 @@ namespace Infrastructure.Migrations
                     b.Navigation("TranslationBasket");
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Domain.Entities.Language", b =>
+            modelBuilder.Entity("Domain.Entities.FileType", b =>
+                {
+                    b.Navigation("FileToTranslates");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Language", b =>
                 {
                     b.Navigation("TranslationBaskets");
                 });
 
-            modelBuilder.Entity("TranslatorAPI.Domain.Entities.TranslationBasket", b =>
+            modelBuilder.Entity("Domain.Entities.PriceAlterator", b =>
+                {
+                    b.Navigation("FileTypes");
+
+                    b.Navigation("Languages");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TranslationBasket", b =>
                 {
                     b.Navigation("Files");
 

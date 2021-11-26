@@ -32,9 +32,9 @@ namespace TranslatorAPI.Controllers
         [HttpGet("{basketId}")]
         public ViewTranslationBasket Get(Guid basketId)
         {            
-            var basket = _context.TranslationBasket.Include(x => x.Files).Where(x => x.Id == basketId).FirstOrDefault();
+            var basket = _context.TranslationBasket.Include(x => x.Files).Include(x=>x.Languages).Where(x => x.Id == basketId).FirstOrDefault();
             PriceCalculator pc = new();
-            decimal price = pc.Calculate(basket.Files.ToList());
+            decimal price = pc.Calculate(basket);
             ViewTranslationBasket result = ViewTranslationBasket.Map(basket,price);
             return result;
         }

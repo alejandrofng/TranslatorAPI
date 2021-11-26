@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TranslatorAPI.Domain.Entities;
+using Domain.Entities;
 
 namespace Infrastructure.Persistence.Configurations
 {
-    public class PriceAlteratorByFileTypeConfiguration : IEntityTypeConfiguration<PriceAlteratorByFileType>
+    public class PriceAlteratorConfiguration : IEntityTypeConfiguration<PriceAlterator>
     {
-        public void Configure(EntityTypeBuilder<PriceAlteratorByFileType> builder)
+        public void Configure(EntityTypeBuilder<PriceAlterator> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)

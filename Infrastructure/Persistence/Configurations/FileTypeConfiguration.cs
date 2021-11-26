@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TranslatorAPI.Domain.Entities;
+using Domain.Entities;
 
 namespace Infrastructure.Persistence.Configurations
 {
@@ -17,7 +17,9 @@ namespace Infrastructure.Persistence.Configurations
             builder.Property(x => x.Code)
                 .IsRequired()
                 .HasMaxLength(10);
-
+            builder.HasOne(x => x.PriceAlterator)
+            .WithMany(x => x.FileTypes)
+            .HasForeignKey(x => x.PriceAlteratorId);
         }
     }
 }

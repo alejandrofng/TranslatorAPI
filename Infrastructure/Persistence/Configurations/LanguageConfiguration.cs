@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TranslatorAPI.Domain.Entities;
+using Domain.Entities;
 
 namespace Infrastructure.Persistence.Configurations
 {
@@ -19,6 +19,10 @@ namespace Infrastructure.Persistence.Configurations
             .HasMaxLength(5);
             builder.HasMany(x => x.TranslationBaskets)
                             .WithOne(x => x.Language);
+
+            builder.HasOne(x => x.PriceAlterator)
+                .WithMany(x => x.Languages)
+                .HasForeignKey(x => x.PriceAlteratorId);
         }
     }
 }
