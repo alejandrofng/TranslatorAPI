@@ -25,11 +25,11 @@ namespace Application
         {
             var files = Basket.Files;
             var languages = Basket.Languages.Select(x => x.Language).ToList();
-            decimal price = 0M;
-            List<string> basketWordsMemory = new();
-            List<string> basketSentenceMemory = new();
+            decimal price = 0M;            
             foreach (Language language in languages)
             {
+                List<string> basketWordsMemory = new();
+                List<string> basketSentenceMemory = new();
                 decimal LanguagePriceCalculation = 0M;
                 decimal FilesPriceCalculation = 0M;                
                 PriceAlterator languagePriceAlterator= language.PriceAlterator;
