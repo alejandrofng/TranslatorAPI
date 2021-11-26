@@ -39,7 +39,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    PriceAlteratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    PriceAlteratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,7 +49,7 @@ namespace Infrastructure.Migrations
                         column: x => x.PriceAlteratorId,
                         principalTable: "PriceAlterator",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,7 +58,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
-                    PriceAlteratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    PriceAlteratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -68,7 +68,7 @@ namespace Infrastructure.Migrations
                         column: x => x.PriceAlteratorId,
                         principalTable: "PriceAlterator",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,6 +123,24 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "FileType",
+                columns: new[] { "Id", "Code", "PriceAlteratorId" },
+                values: new object[,]
+                {
+                    { new Guid("ab2b3a13-b45d-413f-9ca8-24a704e5b5a5"), "txt", null },
+                    { new Guid("4a9f0f9a-9b67-4fe1-9eb2-7f3b796c42cf"), "doc", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Language",
+                columns: new[] { "Id", "Code", "PriceAlteratorId" },
+                values: new object[,]
+                {
+                    { new Guid("c2846219-7669-4b16-a586-e231bae168ae"), "zh-cn", null },
+                    { new Guid("42dbd1cf-3528-44f9-b407-7a86c17cce63"), "en-us", null }
+                });
+
+            migrationBuilder.InsertData(
                 table: "PriceAlterator",
                 columns: new[] { "Id", "IsDiscount", "Percentage" },
                 values: new object[,]
@@ -142,14 +160,18 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "FileType",
-                columns: new[] { "Id", "Code", "PriceAlteratorId" },
-                values: new object[] { new Guid("269a6e63-f58c-493c-9f0b-3dd81ece3fd6"), "pdf", new Guid("7198d221-9ed2-4174-ac21-68708e80ec3f") });
+                table: "FileToTranslate",
+                columns: new[] { "Id", "Comments", "Content", "FileTypeId", "Name", "ProjectId" },
+                values: new object[] { new Guid("56843dcf-64f6-468e-b1ef-365b2c54820e"), "3 dummy comment 3", "Let there be night in the softest of days#LW-Test#why would you try to play games at this time?", new Guid("4a9f0f9a-9b67-4fe1-9eb2-7f3b796c42cf"), "file 3", new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f") });
 
             migrationBuilder.InsertData(
                 table: "FileType",
                 columns: new[] { "Id", "Code", "PriceAlteratorId" },
-                values: new object[] { new Guid("991a253c-c55e-4f09-8d1b-6062e288a391"), "psd", new Guid("9c4478e4-784c-47c8-a96e-2661d6b33574") });
+                values: new object[,]
+                {
+                    { new Guid("269a6e63-f58c-493c-9f0b-3dd81ece3fd6"), "pdf", new Guid("7198d221-9ed2-4174-ac21-68708e80ec3f") },
+                    { new Guid("991a253c-c55e-4f09-8d1b-6062e288a391"), "psd", new Guid("9c4478e4-784c-47c8-a96e-2661d6b33574") }
+                });
 
             migrationBuilder.InsertData(
                 table: "Language",

@@ -8,8 +8,8 @@ namespace Domain.Entities
         public Guid Id { get; private set; }
         public bool IsDiscount { get; private set; }
         public decimal Percentage { get; private set; }
-        public virtual ICollection<FileType> FileTypes { get; set; }
-        public virtual ICollection<Language> Languages { get; set; }
+        public virtual ICollection<FileType> FileTypes { get; private set; }
+        public virtual ICollection<Language> Languages { get; private set; }
         public PriceAlterator(Guid Id, bool IsDiscount, decimal Percentage)
         {
             this.Id = Id;

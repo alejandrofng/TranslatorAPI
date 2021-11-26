@@ -6,14 +6,14 @@ namespace Domain.Entities
     {
         public Guid Id { get; private set; }
         public string Code { get; private set; }
-        public Guid PriceAlteratorId { get; private set; }
+        public Guid? PriceAlteratorId { get; private set; }
         public virtual PriceAlterator PriceAlterator { get; set; }
-        public virtual ICollection<TranslationBasketLanguage> TranslationBaskets { get; set; }
+        public virtual ICollection<TranslationBasketLanguage> TranslationBaskets { get; private set; }
         protected Language()
         {
 
         }
-        public Language(Guid Id, string Code, Guid PriceAlteratorId)
+        public Language(Guid Id, string Code, Guid? PriceAlteratorId)
         {
             this.Id = Id;
             this.Code = Code;

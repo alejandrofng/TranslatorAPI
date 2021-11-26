@@ -11,7 +11,7 @@ namespace TranslatorAPI.DTO
         public Guid ProjectId { get; set; }
         public string FileName { get; set; }
         public string FileType { get; set; }
-        public List<string> FileContent { get; set; }
+        public string FileContent { get; set; }
         public string Comments { get; set; }
     }
 }

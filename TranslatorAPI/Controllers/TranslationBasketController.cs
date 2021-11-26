@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using TranslatorAPI.Infrastructure;
 using TranslatorAPI.DTO;
-using Application;
 using Application.Invokers;
+using TranslatorAPI.DTO.Extensions;
+using Domain.Entities;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,15 +37,20 @@ namespace TranslatorAPI.Controllers
             var basket = _context.TranslationBasket.Include(x => x.Files).Include(x=>x.Languages).Where(x => x.Id == basketId).FirstOrDefault();
             PriceCalculator pc = new();
             decimal price = pc.Calculate(basket);
-            ViewTranslationBasket result = ViewTranslationBasket.Map(basket,price);
+            ViewTranslationBasket result = TranslationBasketExtensions.Map(basket,price);
             return result;
         }
 
         // POST api/<TranslationBasketController>
         [HttpPost]
-        public void Post([FromBody] AddTranslationBasket dto)
+        public async Task<ActionResult> Post([FromBody] AddTranslationBasket dto)
         {
-            
+            var basket = TranslationBasketExtensions.Map(dto);
+            var languages = _context.Language.Where(x => dto.TargetLanguages.Contains(x.Code)).ToList();
+            languages.ForEach(l => basket.AddLanguage(l));
+            await _context.Set<TranslationBasket>().AddAsync(basket);
+            await _context.SaveChangesAsync();
+            return null;
         }
         // POST api/<TranslationBasketController>
         [HttpPost("{basketId}/AddFile")]

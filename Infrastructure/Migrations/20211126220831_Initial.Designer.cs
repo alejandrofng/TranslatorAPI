@@ -10,7 +10,7 @@ using TranslatorAPI.Infrastructure;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TranslatorAPIContext))]
-    [Migration("20211126165633_Initial")]
+    [Migration("20211126220831_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,6 +73,15 @@ namespace Infrastructure.Migrations
                             FileTypeId = new Guid("991a253c-c55e-4f09-8d1b-6062e288a391"),
                             Name = "file 2",
                             ProjectId = new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f")
+                        },
+                        new
+                        {
+                            Id = new Guid("56843dcf-64f6-468e-b1ef-365b2c54820e"),
+                            Comments = "3 dummy comment 3",
+                            Content = "Let there be night in the softest of days#LW-Test#why would you try to play games at this time?",
+                            FileTypeId = new Guid("4a9f0f9a-9b67-4fe1-9eb2-7f3b796c42cf"),
+                            Name = "file 3",
+                            ProjectId = new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f")
                         });
                 });
 
@@ -87,7 +96,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<Guid>("PriceAlteratorId")
+                    b.Property<Guid?>("PriceAlteratorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -108,6 +117,16 @@ namespace Infrastructure.Migrations
                             Id = new Guid("991a253c-c55e-4f09-8d1b-6062e288a391"),
                             Code = "psd",
                             PriceAlteratorId = new Guid("9c4478e4-784c-47c8-a96e-2661d6b33574")
+                        },
+                        new
+                        {
+                            Id = new Guid("ab2b3a13-b45d-413f-9ca8-24a704e5b5a5"),
+                            Code = "txt"
+                        },
+                        new
+                        {
+                            Id = new Guid("4a9f0f9a-9b67-4fe1-9eb2-7f3b796c42cf"),
+                            Code = "doc"
                         });
                 });
 
@@ -122,7 +141,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
 
-                    b.Property<Guid>("PriceAlteratorId")
+                    b.Property<Guid?>("PriceAlteratorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -137,6 +156,16 @@ namespace Infrastructure.Migrations
                             Id = new Guid("81484f30-49ac-4c3d-b794-ced9a886201c"),
                             Code = "es-ES",
                             PriceAlteratorId = new Guid("aa502c8d-2a63-4267-b65a-29dabc6fdfcb")
+                        },
+                        new
+                        {
+                            Id = new Guid("c2846219-7669-4b16-a586-e231bae168ae"),
+                            Code = "zh-cn"
+                        },
+                        new
+                        {
+                            Id = new Guid("42dbd1cf-3528-44f9-b407-7a86c17cce63"),
+                            Code = "en-us"
                         });
                 });
 
@@ -260,9 +289,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Entities.PriceAlterator", "PriceAlterator")
                         .WithMany("FileTypes")
-                        .HasForeignKey("PriceAlteratorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PriceAlteratorId");
 
                     b.Navigation("PriceAlterator");
                 });
@@ -271,9 +298,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Entities.PriceAlterator", "PriceAlterator")
                         .WithMany("Languages")
-                        .HasForeignKey("PriceAlteratorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PriceAlteratorId");
 
                     b.Navigation("PriceAlterator");
                 });

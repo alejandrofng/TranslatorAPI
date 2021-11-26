@@ -10,7 +10,7 @@ namespace Domain.Entities
         public virtual FileType FileType { get; private set; }
         public string Content { get; private set; }
         public string Comments { get; private set; }
-        public virtual TranslationBasket TranslationBasket {get;set;}
+        public virtual TranslationBasket TranslationBasket {get; private set; }
         protected FileToTranslate()
         {
 

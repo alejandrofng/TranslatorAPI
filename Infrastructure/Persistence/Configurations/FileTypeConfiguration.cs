@@ -19,6 +19,7 @@ namespace Infrastructure.Persistence.Configurations
                 .HasMaxLength(10);
             builder.HasOne(x => x.PriceAlterator)
             .WithMany(x => x.FileTypes)
+            .IsRequired(false)
             .HasForeignKey(x => x.PriceAlteratorId);
         }
     }

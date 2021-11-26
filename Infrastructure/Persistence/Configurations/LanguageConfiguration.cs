@@ -22,6 +22,7 @@ namespace Infrastructure.Persistence.Configurations
 
             builder.HasOne(x => x.PriceAlterator)
                 .WithMany(x => x.Languages)
+                .IsRequired(false)
                 .HasForeignKey(x => x.PriceAlteratorId);
         }
     }
