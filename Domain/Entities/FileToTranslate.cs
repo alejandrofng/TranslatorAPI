@@ -1,14 +1,14 @@
 ﻿using System;
-namespace TranslatorAPI.Domain.Models
+namespace TranslatorAPI.Domain.Entities
 {
     public class FileToTranslate
     {
-        public Guid Id { get; set; }
-        public Guid ProjectId { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public string Content { get; set; }
-        public string Comments { get; set; }
+        public Guid Id { get; private set; }
+        public Guid ProjectId { get; private set; }
+        public string Name { get; private set; }
+        public string Type { get; private set; }
+        public string Content { get; private set; }
+        public string Comments { get; private set; }
         public virtual TranslationBasket TranslationBasket {get;set;}
         protected FileToTranslate()
         {

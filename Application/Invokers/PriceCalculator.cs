@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TranslatorAPI.Domain.Models;
+using TranslatorAPI.Domain.Entities;
 
 namespace Application.Invokers
 {
@@ -9,7 +9,7 @@ namespace Application.Invokers
         public decimal Calculate(List<FileToTranslate> Files)
         {
             CalculatePriceCommand command = new();
-            return command.Execute(Files.Select(x => x.Content).ToList());            
+            return command.Execute(Files);            
         }
     }
 }

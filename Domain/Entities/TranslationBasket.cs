@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace TranslatorAPI.Domain.Models
+namespace TranslatorAPI.Domain.Entities
 {
     public class TranslationBasket
     {
-        public Guid Id { get; set; }
-        public Guid CustomerId { get; set; }        
-        public DateTime DueDate { get; set; }
+        public Guid Id { get; private set; }
+        public Guid CustomerId { get; private set; }        
+        public DateTime DueDate { get; private set; }
         public virtual ICollection<FileToTranslate> Files { get; set; }
         public virtual ICollection<TranslationBasketLanguage> Languages { get; set; }
         protected TranslationBasket() {  }

@@ -4,9 +4,9 @@ using TranslatorAPI.Domain.Entities;
 
 namespace Infrastructure.Persistence.Configurations
 {
-    public class LanguageConfiguration : IEntityTypeConfiguration<Language>
+    public class FileTypeConfiguration : IEntityTypeConfiguration<FileType>
     {
-        public void Configure(EntityTypeBuilder<Language> builder)
+        public void Configure(EntityTypeBuilder<FileType> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
@@ -15,10 +15,9 @@ namespace Infrastructure.Persistence.Configurations
                    .ValueGeneratedOnAdd();
 
             builder.Property(x => x.Code)
-            .IsRequired()
-            .HasMaxLength(5);
-            builder.HasMany(x => x.TranslationBaskets)
-                            .WithOne(x => x.Language);
+                .IsRequired()
+                .HasMaxLength(10);
+
         }
     }
 }

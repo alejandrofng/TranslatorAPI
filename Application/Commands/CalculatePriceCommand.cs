@@ -1,24 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TranslatorAPI.Domain.Entities;
 
 namespace Application
 {
     public class CalculatePriceCommand: Command<decimal>
     {
         private static decimal StandardWordPrice => 0.07M;
-        public override decimal Execute(List<string> filesContent)
+        public override decimal Execute(List<FileToTranslate> files)
         {
             decimal price = 0M;
             List<string> basketWordsMemory = new();
             List<string> basketSentenceMemory = new();
-            foreach (string fileContent in filesContent)
+            foreach (FileToTranslate file in files)
             {
                 List<string> fileWordsMemory = new();
-                List<string> sentences = new(fileContent.Split("#LW-Test#", StringSplitOptions.RemoveEmptyEntries));
+                List<string> sentences = new(file.Content.Split("#LW-Test#", StringSplitOptions.RemoveEmptyEntries));
                 List<string> fileSentences = (from x in sentences
                                        group x by x into g
                                        select g.Key).ToList();
+
+                //FileType fileType = FileType.Types.Where(x => x.Code == file.Type.ToLower()).First();
+                //PriceAlteratorByFileType p = PriceAlteratorByFileType.PriceAlterators.Where(x => x.FileType == fileType).First();
 
                 foreach (string sentence in fileSentences)
                 {

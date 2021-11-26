@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TranslatorAPI.Domain.Models;
+using TranslatorAPI.Domain.Entities;
 
-namespace TranslatorAPI.Infrastructure.Configurations
+namespace Infrastructure.Persistence.Configurations
 {
     public class TranslationBasketLanguageConfiguration : IEntityTypeConfiguration<TranslationBasketLanguage>
     {
