@@ -8,7 +8,7 @@ namespace TranslatorAPI.DTO.Extensions
     {
         public static FileToTranslate Map(AddFileToTranslationBasket dto, Guid FileTypeId)
         {
-            return new FileToTranslate(Guid.NewGuid(),dto.ProjectId,
+            return new FileToTranslate(dto.ProjectId,
                 dto.FileName,
                 FileTypeId,
                 dto.FileContent,

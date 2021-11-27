@@ -16,7 +16,15 @@ namespace Domain.Entities
 
         }
 
-        public FileToTranslate(Guid Id, Guid ProjectId, string Name, Guid FileTypeId, string Content, string Comments)
+        public FileToTranslate(Guid ProjectId, string Name, Guid FileTypeId, string Content, string Comments)
+        {
+            this.ProjectId = ProjectId;
+            this.Name = Name;
+            this.FileTypeId = FileTypeId;
+            this.Content = Content;
+            this.Comments = Comments;
+        }
+        public FileToTranslate(Guid Id,Guid ProjectId, string Name, Guid FileTypeId, string Content, string Comments)
         {
             this.Id = Id;
             this.ProjectId = ProjectId;

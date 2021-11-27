@@ -54,8 +54,14 @@ namespace TranslatorAPI.Controllers
         }
         // POST api/<TranslationBasketController>
         [HttpPost("{basketId}/AddFile")]
-        public void AddFile([FromBody] AddFileToTranslationBasket dto, Guid basketId)
+        public async Task<ActionResult> AddFile([FromBody] AddFileToTranslationBasket dto, Guid basketId)
         {
+            dto.ProjectId = basketId;
+            Guid FileTypeId = _context.FileType.Where(x => x.Code == dto.FileType).Select(x=>x.Id).First();
+            FileToTranslate file = FileToTranslateExtensions.Map(dto,FileTypeId);
+            await _context.FileToTranslate.AddAsync(file);
+            await _context.SaveChangesAsync();
+            return null;
         }
     }
 }
