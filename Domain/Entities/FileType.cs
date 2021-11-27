@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace Domain.Entities
 {
-    public class FileType
+    public class FileType:Entity
     {
-        public Guid Id { get; private set; }
         public string Code { get; private set; }
         public Guid? PriceAlteratorId { get; private set; }
         public virtual PriceAlterator PriceAlterator { get; private set; }
@@ -14,9 +13,8 @@ namespace Domain.Entities
         {
 
         }
-        public FileType(Guid Id,string Code, Guid? PriceAlteratorId)
+        public FileType(Guid Id,string Code, Guid? PriceAlteratorId):base(Id)
         {
-            this.Id = Id;
             this.Code = Code;
             this.PriceAlteratorId = PriceAlteratorId;
         }

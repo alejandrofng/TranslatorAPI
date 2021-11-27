@@ -1,9 +1,8 @@
 ﻿using System;
 namespace Domain.Entities
 {
-    public class FileToTranslate
+    public class FileToTranslate: Entity
     {
-        public Guid Id { get; private set; }
         public Guid ProjectId { get; private set; }
         public string Name { get; private set; }
         public Guid FileTypeId { get; private set; }
@@ -24,9 +23,9 @@ namespace Domain.Entities
             this.Content = Content;
             this.Comments = Comments;
         }
-        public FileToTranslate(Guid Id,Guid ProjectId, string Name, Guid FileTypeId, string Content, string Comments)
+        public FileToTranslate(Guid Id,Guid ProjectId, string Name, Guid FileTypeId, string Content,
+            string Comments):base(Id)
         {
-            this.Id = Id;
             this.ProjectId = ProjectId;
             this.Name = Name;
             this.FileTypeId = FileTypeId;

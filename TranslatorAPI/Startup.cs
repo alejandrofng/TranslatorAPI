@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TranslatorAPI.Infrastructure;
+using TranslatorAPI.Validators;
 
 namespace TranslatorAPI
 {
@@ -39,8 +41,15 @@ namespace TranslatorAPI
             //                                                                 sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(3), null);
             //                                                             })
             //                                               .UseLazyLoadingProxies());
+            services.AddMvc().AddFluentValidation(
+                fv =>
+                {
+                    fv.ImplicitlyValidateChildProperties = true;
+                })
+            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
-services.AddSwaggerGen(c =>
+
+            services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TranslatorAPI", Version = "v1" });
             });

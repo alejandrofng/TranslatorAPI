@@ -3,16 +3,14 @@ using System.Collections.Generic;
 
 namespace Domain.Entities
 {
-    public class PriceAlterator
+    public class PriceAlterator:Entity
     {
-        public Guid Id { get; private set; }
         public bool IsDiscount { get; private set; }
         public decimal Percentage { get; private set; }
         public virtual ICollection<FileType> FileTypes { get; private set; }
         public virtual ICollection<Language> Languages { get; private set; }
-        public PriceAlterator(Guid Id, bool IsDiscount, decimal Percentage)
+        public PriceAlterator(Guid Id, bool IsDiscount, decimal Percentage):base(Id)
         {
-            this.Id = Id;
             this.IsDiscount = IsDiscount;
             this.Percentage = Percentage;
         }

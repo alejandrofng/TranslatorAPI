@@ -127,7 +127,7 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "PriceAlteratorId" },
                 values: new object[,]
                 {
-                    { new Guid("ab2b3a13-b45d-413f-9ca8-24a704e5b5a5"), "txt", null },
+                    { new Guid("ddde22f3-fb0d-4ae0-8d41-72642d503864"), "txt", null },
                     { new Guid("4a9f0f9a-9b67-4fe1-9eb2-7f3b796c42cf"), "doc", null }
                 });
 
@@ -136,8 +136,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "PriceAlteratorId" },
                 values: new object[,]
                 {
-                    { new Guid("c2846219-7669-4b16-a586-e231bae168ae"), "zh-cn", null },
-                    { new Guid("42dbd1cf-3528-44f9-b407-7a86c17cce63"), "en-us", null }
+                    { new Guid("f05f3492-58ab-4050-81d2-e9c167b327dd"), "zh-cn", null },
+                    { new Guid("a4ea476f-dd18-4589-ac29-0229abfb5c33"), "en-us", null }
                 });
 
             migrationBuilder.InsertData(
@@ -162,7 +162,7 @@ namespace Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "FileToTranslate",
                 columns: new[] { "Id", "Comments", "Content", "FileTypeId", "Name", "ProjectId" },
-                values: new object[] { new Guid("56843dcf-64f6-468e-b1ef-365b2c54820e"), "3 dummy comment 3", "Let there be night in the softest of days#LW-Test#why would you try to play games at this time?", new Guid("4a9f0f9a-9b67-4fe1-9eb2-7f3b796c42cf"), "file 3", new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f") });
+                values: new object[] { new Guid("012ba298-4644-4d36-8b55-d17e9d599711"), "3 dummy comment 3", "Let there be night in the softest of days#LW-Test#why would you try to play games at this time?", new Guid("4a9f0f9a-9b67-4fe1-9eb2-7f3b796c42cf"), "file 3", new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f") });
 
             migrationBuilder.InsertData(
                 table: "FileType",

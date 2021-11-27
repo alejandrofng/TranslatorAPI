@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 namespace Domain.Entities
 {
-    public class Language
+    public class Language:Entity
     {
-        public Guid Id { get; private set; }
         public string Code { get; private set; }
         public Guid? PriceAlteratorId { get; private set; }
         public virtual PriceAlterator PriceAlterator { get; set; }
@@ -13,9 +12,8 @@ namespace Domain.Entities
         {
 
         }
-        public Language(Guid Id, string Code, Guid? PriceAlteratorId)
+        public Language(Guid Id, string Code, Guid? PriceAlteratorId):base(Id)
         {
-            this.Id = Id;
             this.Code = Code;
             this.PriceAlteratorId = PriceAlteratorId;
         }

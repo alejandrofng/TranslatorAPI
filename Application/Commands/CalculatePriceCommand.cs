@@ -71,12 +71,15 @@ namespace Application
                             }
                         }
                     }
-                    FilePriceCalculation = ApplyPriceAlterator(FileTypePriceAlterator, FilePriceCalculation);
+
+                    if(FileTypePriceAlterator!=null)
+                        FilePriceCalculation = ApplyPriceAlterator(FileTypePriceAlterator, FilePriceCalculation);
                     FilesPriceCalculation += FilePriceCalculation;
                     basketSentenceMemory.AddRange(fileSentences.Where(x => !basketSentenceMemory.Any(y => y == x)));
                     basketWordsMemory.AddRange(fileWordsMemory.Where(x => !basketWordsMemory.Any(y => y == x)));
                 }
-                LanguagePriceCalculation = ApplyPriceAlterator(languagePriceAlterator, FilesPriceCalculation);
+                if (languagePriceAlterator != null)
+                    LanguagePriceCalculation = ApplyPriceAlterator(languagePriceAlterator, FilesPriceCalculation);
                 price += LanguagePriceCalculation;
             }            
             return price;

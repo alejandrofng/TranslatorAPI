@@ -4,9 +4,8 @@ using System.Linq;
 
 namespace Domain.Entities
 {
-    public class TranslationBasket
+    public class TranslationBasket: Entity
     {
-        public Guid Id { get; private set; }
         public Guid CustomerId { get; private set; }        
         public DateTime DueDate { get; private set; }
         public virtual ICollection<FileToTranslate> Files { get; private set; }
@@ -19,10 +18,9 @@ namespace Domain.Entities
             Guid Id,
             Guid CustomerId, 
             DateTime DueDate
-            )
+            ):base(Id)
         {
             this.CustomerId = CustomerId;
-            this.Id = Id;
             this.DueDate = DueDate;
         }
 

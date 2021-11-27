@@ -10,7 +10,6 @@ namespace TranslatorAPI.Infrastructure
         private readonly string _connectionString;
         public TranslatorAPIContext()
         {
-
         }
         public TranslatorAPIContext(string connectionString)
         {
