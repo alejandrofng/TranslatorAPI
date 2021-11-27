@@ -9,9 +9,6 @@ using Application.Invokers;
 using TranslatorAPI.DTO.Extensions;
 using Domain.Entities;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TranslatorAPI.Controllers
 {
@@ -19,16 +16,16 @@ namespace TranslatorAPI.Controllers
     [ApiController]
     public class TranslationBasketController : ControllerBase
     {
-        private TranslatorAPIContext _context { get; set; }
+        private TranslatorAPIContext DbContext { get; set; }
         public TranslationBasketController(TranslatorAPIContext context)
         {
-            _context = context;
+            DbContext = context;
         }
         // GET: api/<TranslationBasketController>
         [HttpGet]
         public IEnumerable<object> Get()
         {
-            return _context.TranslationBasket.ToList();
+            return DbContext.TranslationBasket.ToList();
         }
 
         // GET api/<TranslationBasketController>/5
@@ -37,7 +34,9 @@ namespace TranslatorAPI.Controllers
         {
             try
             {
-                var basket = _context.TranslationBasket.Include(x => x.Files).Include(x => x.Languages).Where(x => x.Id == basketId).FirstOrDefault();
+                var basket = DbContext.TranslationBasket.Include(x => x.Files).Include(x => x.Languages).Where(x => x.Id == basketId).FirstOrDefault();
+                if (basket == null)
+                    return NotFound("The projectId supplied does not exist.");
                 PriceCalculator pc = new();
                 decimal price = pc.Calculate(basket);
                 ViewTranslationBasket result = TranslationBasketExtensions.Map(basket, price);
@@ -56,29 +55,16 @@ namespace TranslatorAPI.Controllers
             try
             {
                 var basket = TranslationBasketExtensions.Map(dto);
-                var languages = _context.Language.Where(x => dto.TargetLanguages.Contains(x.Code)).ToList();
+                var languages = DbContext.Language.Where(x => dto.TargetLanguages.Contains(x.Code.ToLower())).ToList();
                 languages.ForEach(l => basket.AddLanguage(l));
-                await _context.Set<TranslationBasket>().AddAsync(basket);
-                await _context.SaveChangesAsync();
+                await DbContext.Set<TranslationBasket>().AddAsync(basket);
+                await DbContext.SaveChangesAsync();
                 return CreatedAtAction(nameof(Get),basket.Id);
             }
             catch
             {
                 return BadRequest();
-            }
-            
-
-        }
-        // POST api/<TranslationBasketController>
-        [HttpPost("{basketId}/AddFile")]
-        public async Task<ActionResult> AddFile([FromBody] AddFileToTranslationBasket dto, Guid basketId)
-        {
-            dto.ProjectId = basketId;
-            Guid FileTypeId = _context.FileType.Where(x => x.Code == dto.FileType).Select(x=>x.Id).First();
-            FileToTranslate file = FileToTranslateExtensions.Map(dto,FileTypeId);
-            await _context.FileToTranslate.AddAsync(file);
-            await _context.SaveChangesAsync();
-            return null;
+            }            
         }
     }
 }

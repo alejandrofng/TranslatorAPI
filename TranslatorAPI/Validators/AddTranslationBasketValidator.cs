@@ -23,6 +23,6 @@ namespace TranslatorAPI.Validators
             })
             .WithErrorCode("Supplied ProjectId already exists")
             .WithMessage("Value already exists");
-            }
+        }
     }
 }

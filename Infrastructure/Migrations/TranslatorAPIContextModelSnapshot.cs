@@ -74,7 +74,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("012ba298-4644-4d36-8b55-d17e9d599711"),
+                            Id = new Guid("34e77c0e-a4f6-4d93-88df-9e9beb4b20f5"),
                             Comments = "3 dummy comment 3",
                             Content = "Let there be night in the softest of days#LW-Test#why would you try to play games at this time?",
                             FileTypeId = new Guid("4a9f0f9a-9b67-4fe1-9eb2-7f3b796c42cf"),
@@ -99,6 +99,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Code")
+                        .IsUnique();
+
                     b.HasIndex("PriceAlteratorId");
 
                     b.ToTable("FileType");
@@ -118,7 +121,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ddde22f3-fb0d-4ae0-8d41-72642d503864"),
+                            Id = new Guid("e2a4f70c-6851-4d48-8409-11ef36bff2c7"),
                             Code = "txt"
                         },
                         new
@@ -144,6 +147,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Code")
+                        .IsUnique();
+
                     b.HasIndex("PriceAlteratorId");
 
                     b.ToTable("Language");
@@ -152,17 +158,17 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("81484f30-49ac-4c3d-b794-ced9a886201c"),
-                            Code = "es-ES",
+                            Code = "es-es",
                             PriceAlteratorId = new Guid("aa502c8d-2a63-4267-b65a-29dabc6fdfcb")
                         },
                         new
                         {
-                            Id = new Guid("f05f3492-58ab-4050-81d2-e9c167b327dd"),
+                            Id = new Guid("b1c541f7-136c-413a-a81f-0060a702ab96"),
                             Code = "zh-cn"
                         },
                         new
                         {
-                            Id = new Guid("a4ea476f-dd18-4589-ac29-0229abfb5c33"),
+                            Id = new Guid("3d0bc921-1688-4cc1-864b-d2ecc2ae42da"),
                             Code = "en-us"
                         });
                 });
@@ -179,7 +185,7 @@ namespace Infrastructure.Migrations
                     b.Property<decimal>("Percentage")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(18,2)")
-                        .HasDefaultValue(0m);
+                        .HasDefaultValue(0.1m);
 
                     b.HasKey("Id");
 

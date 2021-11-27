@@ -2,19 +2,12 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TranslatorAPI.Infrastructure;
-using TranslatorAPI.Validators;
 
 namespace TranslatorAPI
 {
@@ -34,13 +27,6 @@ namespace TranslatorAPI
 
             services.AddControllers();
             services.AddScoped(_ => new TranslatorAPIContext(connectionString));
-            //services.AddDbContext<TranslatorAPIContext>(options => options.UseSqlServer(connectionString,
-            //                                                             sqlOptions =>
-            //                                                             {
-            //                                                                 sqlOptions.MigrationsAssembly("Translator.Infrastructure.Migrations");
-            //                                                                 sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(3), null);
-            //                                                             })
-            //                                               .UseLazyLoadingProxies());
             services.AddMvc().AddFluentValidation(
                 fv =>
                 {

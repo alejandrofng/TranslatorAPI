@@ -13,7 +13,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsDiscount = table.Column<bool>(type: "bit", nullable: false),
-                    Percentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false, defaultValue: 0m)
+                    Percentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false, defaultValue: 0.1m)
                 },
                 constraints: table =>
                 {
@@ -127,7 +127,7 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "PriceAlteratorId" },
                 values: new object[,]
                 {
-                    { new Guid("ddde22f3-fb0d-4ae0-8d41-72642d503864"), "txt", null },
+                    { new Guid("e2a4f70c-6851-4d48-8409-11ef36bff2c7"), "txt", null },
                     { new Guid("4a9f0f9a-9b67-4fe1-9eb2-7f3b796c42cf"), "doc", null }
                 });
 
@@ -136,8 +136,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "PriceAlteratorId" },
                 values: new object[,]
                 {
-                    { new Guid("f05f3492-58ab-4050-81d2-e9c167b327dd"), "zh-cn", null },
-                    { new Guid("a4ea476f-dd18-4589-ac29-0229abfb5c33"), "en-us", null }
+                    { new Guid("b1c541f7-136c-413a-a81f-0060a702ab96"), "zh-cn", null },
+                    { new Guid("3d0bc921-1688-4cc1-864b-d2ecc2ae42da"), "en-us", null }
                 });
 
             migrationBuilder.InsertData(
@@ -162,7 +162,7 @@ namespace Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "FileToTranslate",
                 columns: new[] { "Id", "Comments", "Content", "FileTypeId", "Name", "ProjectId" },
-                values: new object[] { new Guid("012ba298-4644-4d36-8b55-d17e9d599711"), "3 dummy comment 3", "Let there be night in the softest of days#LW-Test#why would you try to play games at this time?", new Guid("4a9f0f9a-9b67-4fe1-9eb2-7f3b796c42cf"), "file 3", new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f") });
+                values: new object[] { new Guid("34e77c0e-a4f6-4d93-88df-9e9beb4b20f5"), "3 dummy comment 3", "Let there be night in the softest of days#LW-Test#why would you try to play games at this time?", new Guid("4a9f0f9a-9b67-4fe1-9eb2-7f3b796c42cf"), "file 3", new Guid("653910ac-3fc1-4d18-b471-ad496ab6425f") });
 
             migrationBuilder.InsertData(
                 table: "FileType",
@@ -176,7 +176,7 @@ namespace Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Language",
                 columns: new[] { "Id", "Code", "PriceAlteratorId" },
-                values: new object[] { new Guid("81484f30-49ac-4c3d-b794-ced9a886201c"), "es-ES", new Guid("aa502c8d-2a63-4267-b65a-29dabc6fdfcb") });
+                values: new object[] { new Guid("81484f30-49ac-4c3d-b794-ced9a886201c"), "es-es", new Guid("aa502c8d-2a63-4267-b65a-29dabc6fdfcb") });
 
             migrationBuilder.InsertData(
                 table: "FileToTranslate",
@@ -207,9 +207,21 @@ namespace Infrastructure.Migrations
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FileType_Code",
+                table: "FileType",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FileType_PriceAlteratorId",
                 table: "FileType",
                 column: "PriceAlteratorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Language_Code",
+                table: "Language",
+                column: "Code",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Language_PriceAlteratorId",

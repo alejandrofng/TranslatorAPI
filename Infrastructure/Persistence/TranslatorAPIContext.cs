@@ -31,7 +31,7 @@ namespace TranslatorAPI.Infrastructure
             ////dummy data to test the database
             ///
 
-            Language LanguageSpanish = new (new Guid("81484F30-49AC-4C3D-B794-CED9A886201C"), "es-ES", new Guid("AA502C8D-2A63-4267-B65A-29DABC6FDFCB"));
+            Language LanguageSpanish = new (new Guid("81484F30-49AC-4C3D-B794-CED9A886201C"), "es-es", new Guid("AA502C8D-2A63-4267-B65A-29DABC6FDFCB"));
             Language LanguageEnglish = new(Guid.NewGuid(), "en-us", null);
             Language LanguageChinesse = new(Guid.NewGuid(), "zh-cn", null);
 

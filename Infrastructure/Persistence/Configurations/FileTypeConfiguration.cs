@@ -13,7 +13,7 @@ namespace Infrastructure.Persistence.Configurations
                    .IsRequired();
             builder.Property(x => x.Id)
                    .ValueGeneratedOnAdd();
-
+            builder.HasIndex(x => x.Code).IsUnique();
             builder.Property(x => x.Code)
                 .IsRequired()
                 .HasMaxLength(10);

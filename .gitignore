@@ -7,3 +7,5 @@ Infrastructure/bin/
 Infrastructure/obj/
 Application/bin/
 Application/obj/
+Domain.UnitTests/bin/
+Domain.UnitTests/obj/

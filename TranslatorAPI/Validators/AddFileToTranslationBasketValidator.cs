@@ -1,7 +1,6 @@
 ﻿using Domain.Entities;
 using FluentValidation;
 using Infrastructure.Persistence.Extensions;
-using System;
 using TranslatorAPI.DTO;
 using TranslatorAPI.Infrastructure;
 
@@ -12,6 +11,13 @@ namespace TranslatorAPI.Validators
         public AddFileToTranslationBasketValidator(TranslatorAPIContext dbContext)
         {
             RuleFor(x => x.ProjectId).NotEmpty();
+            RuleFor(x => x.ProjectId).MustAsync(async (id, token) =>
+            {
+
+                return await dbContext.ExistsAsync<TranslationBasket>(id, token);
+            })
+            .WithErrorCode("ProjectId does not exist")
+            .WithMessage("Value does not exists");
             RuleFor(x => x.FileId).NotEmpty();
             RuleFor(x => x.FileName).NotEmpty();
             RuleFor(x => x.FileContent).NotEmpty();
@@ -19,12 +25,8 @@ namespace TranslatorAPI.Validators
             RuleFor(x => x.FileId)
             .MustAsync(async (id, token) =>
             {
-
                 return !await dbContext.ExistsAsync<FileToTranslate>(id, token);
-            })
-            .WithErrorCode("Supplied FileId already exists")
-            .WithMessage("Value already exists");
+            }).WithErrorCode("Supplied FileId already exists").WithMessage("Value already exists");
         }
-    }
     }
 }
