@@ -21,12 +21,6 @@ namespace TranslatorAPI.Controllers
         {
             DbContext = context;
         }
-        // GET: api/<TranslationBasketController>
-        [HttpGet]
-        public IEnumerable<object> Get()
-        {
-            return DbContext.TranslationBasket.ToList();
-        }
 
         // GET api/<TranslationBasketController>/5
         [HttpGet("{basketId}")]

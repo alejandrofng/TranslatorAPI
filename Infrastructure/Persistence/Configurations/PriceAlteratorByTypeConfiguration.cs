@@ -17,8 +17,9 @@ namespace Infrastructure.Persistence.Configurations
             builder.Property(x => x.IsDiscount)
                 .IsRequired();
             builder.Property(x => x.Percentage)
-                .HasDefaultValue(0.1M)                
+                .HasDefaultValue(0)
                 .IsRequired();
+
         }
     }
 }

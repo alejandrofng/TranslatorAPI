@@ -10,7 +10,7 @@ namespace Infrastructure.Persistence.Extensions
     {
         public static async Task<bool> ExistsAsync<T>(this DbContext dbContext, Guid id, CancellationToken cancellationToken = default) where T:Entity
         {
-            return await dbContext.Set<T>().AnyAsync(x => x.Id == id);
+            return await dbContext.Set<T>().AnyAsync(x => x.Id == id, cancellationToken);
         }
     }
 }
