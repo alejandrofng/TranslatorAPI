@@ -21,18 +21,11 @@ namespace TranslatorAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] AddFileToTranslationBasket dto)
         {
-            try
-            {
-                Guid FileTypeId = Dbcontext.FileType.Where(x => x.Code == dto.FileType).Select(x => x.Id).First();
-                FileToTranslate file = FileToTranslateExtensions.Map(dto, FileTypeId);
-                await Dbcontext.FileToTranslate.AddAsync(file);
-                await Dbcontext.SaveChangesAsync();
-                return Ok();
-            }
-            catch
-            {
-                return BadRequest();
-            }
+            Guid FileTypeId = Dbcontext.FileType.Where(x => x.Code == dto.FileType).Select(x => x.Id).First();
+            FileToTranslate file = FileToTranslateExtensions.Map(dto, FileTypeId);
+            await Dbcontext.FileToTranslate.AddAsync(file);
+            await Dbcontext.SaveChangesAsync();
+            return Ok();
         }
     }
 }
